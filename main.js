@@ -145,7 +145,7 @@ function battleShipSolver() {
 		for (let i =0 ; i < ship.length; i ++) {
 			lastPosition.occupied = false;
 			lastPosition.confirmed = true;
-			if (ship.orientation == "vertical") {
+			if (ship.orientation == 's') {
 				lastPosition = lastPosition['s'];
 			} else {
 				lastPosition = lastPosition['e'];
@@ -179,6 +179,7 @@ function battleShipSolver() {
 				orientation = (Math.random() * 2 > 1) ? 'e' : 's';
 				if (tryShipAtPosition(ships[ship], index, orientation, 'occupied')) {
 					validPosition = true;
+					ships[ship].orientation = orientation;
 				}
 			}
 			lastPosition = positions[index];
