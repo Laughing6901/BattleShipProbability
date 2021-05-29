@@ -139,14 +139,28 @@ function battleShipSolver() {
 
 	function removeShip(shipName) {
 		var allDead = true;
-		ships[shipName].alive = false;
+		ship = ships[shipName];
+		ship.alive = false;
+		lastPosition = positions[ship.position];
+		for (let i =0 ; i < ship.length; i ++) {
+			lastPosition.occupied = false;
+			lastPosition.confirmed = true;
+			if (ship.orientation == "vertical") {
+				lastPosition = lastPosition['s'];
+			} else {
+				lastPosition = lastPosition['e'];
+			}
+		}
 
 		// If this is the last ship, end the game.
 		for (var ship in ships) {
 			if (ships[ship].alive) {
 				allDead = false;
+			} else {
+
 			}
 		}
+
 		if (allDead) {
 			document.getElementById('result').innerHTML = 'Game over! Move count: '+shotCount;
 		}
@@ -196,7 +210,7 @@ function battleShipSolver() {
 		positions[0].fired = true;
 		var hit = positions[0].hit = confirm('hit at '+getIndexNicename(0)+'?');
 		// misses are set to confirmed to improve the probability engine
-		positions[0].confirmed = hit ? false : true;
+		positions[0].confirmed = positions[0].occupied ? false : true;
 		var index = positions[0].index;
 		positions[0].probability = -1;
 
